@@ -16,7 +16,7 @@ module Justdoc
     #     the use of Justdoc to document.
     #!!
     def c_recognize(x)
-      /\/\*!([^*]|\r\n|(\/\*([^*]|\r\n)*\*\/))*\*\//.scan(x)
+      @matches = /\/\*!([^*]|\r\n|(\/\*([^*]|\r\n)*\*\/))*\*\//.scan(x)
     end
   
     #! method: r_recognize
@@ -28,7 +28,7 @@ module Justdoc
     #     implying the use of Justdoc to document.
     #!!
     def r_recognize(x)
-      /#!([^*]|\r\n|(#([^*])*))*#!!/.scan(x)
+      @matches = /#!([^*]|\r\n|(#([^*])*))*#!!/.scan(x)
     end
   end
 end

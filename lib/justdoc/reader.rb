@@ -35,7 +35,7 @@ module Justdoc
     def read_and_recognize
       f    = File.read(@file)
       code = @recognizer.detect_source
-      @comment_syntax == :rbased ? @recognizer.r_recognize(f) : @recognizer.c_recognize(c)
+      @comment_syntax == :rbased ? @recognizer.r_recognize(f) : @recognizer.c_recognize(f)
     end
     
     #! method: detect_source
