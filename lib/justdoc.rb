@@ -6,3 +6,7 @@
 # The main file which links the ruby gem.
 
 require "justdoc/version"
+require "justdoc/generator"
+require "justdoc/output"
+require "justdoc/reader"
+require "justdoc/recognizer"
