@@ -5,19 +5,32 @@
 # ----------------------------------------------------------------------
 # The abstraction of recognizing the sytax of specific languages 
 # and their commenting syntax.
-
-class Recognizer
+module Justdoc
+  class Recognizer
   
-  def c_recognize(x)
-    /\/\*!([^*]|\r\n|(\/\*([^*]|\r\n)*\*\/))*\*\//.match(x)
+    #! method: c_recognize
+    #  abstract: Recognizes C-based multiline comments
+    #  params:
+    #     x   =   The String to match
+    #  description:
+    #     A method that recognizes multiline C-based comments with an ! implying
+    #     the use of Justdoc to document.
+    #!!
+    def c_recognize(x)
+      /\/\*!([^*]|\r\n|(\/\*([^*]|\r\n)*\*\/))*\*\//.match(x)
+    end
+  
+    #! method: r_recognize
+    #  abstract: Recognizes Ruby-based comments
+    #  params:
+    #     x   =   The String to match
+    #  description:
+    #     A method that recognizes hash style ruby-based comments with an ! 
+    #     implying the use of Justdoc to document.
+    #!!
+    def r_recognize(x)
+      /#!([^*]|\r\n|(#([^*]|\r\n)*))*#!!/.match(x)
+    end
+    
   end
-  
-  def r_recognize(x)
-    /#!.*\n/.match(x)
-  end
-  
-  def is_cbased?
-    false
-  end
-  
 end

@@ -41,7 +41,7 @@ To document code, simply use comments with an added ! (exclamation point).  If y
   <tr>
     <td>Classes</td>
     <td>
-    <pre>      #! name: Human
+    <pre>      #! class: Human
       #!
       #! abstract: Defines Characteristics and Methods of a Human.
       #!
@@ -53,7 +53,7 @@ To document code, simply use comments with an added ! (exclamation point).  If y
   <tr>
     <td>Methods</td>
     <td>
-    <pre>      #! name: have_dinner(food, drink)
+    <pre>      #! method: have_dinner(food, drink)
       #!
       #! abstract: Called during the dinner mealtime.
       #!
@@ -69,7 +69,7 @@ To document code, simply use comments with an added ! (exclamation point).  If y
   <tr>
     <td>Properties</td>
     <td>
-    <pre>      #! name: weight
+    <pre>      #! var: weight
       #!
       #! abstract: The weight of the human.
       #!
