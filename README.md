@@ -32,6 +32,52 @@ Being a documentation generator means that the project needs familiarity with sy
   - Objective-C  
   - C#  
   - Java
+  
+## Documentation
+To document code, simply use comments with an added ! (exclamation point).  If your language supports multiline comments, documentation must be written using `/*! */` instead of `//! `.  For Ruby, declare documentation with `#! `. The following chart shows the syntax of the documentation. It is written using Ruby, but the syntax remains the same across languages.
+
+<table>
+  <tr><th colspan="2" style="text-align:center;">Documentation Syntax Table</th></tr>
+  <tr>
+    <td>Classes</td>
+    <td>
+    <pre>      #! name: Human
+      #!
+      #! abstract: Defines Characteristics and Methods of a Human.
+      #!
+      #! description:
+      #!    The human class inherits methods from the Animal class.
+      #!    It allows methods to be called on a human object.
+      class Human &lt; Animal</pre></td>
+  </tr>
+  <tr>
+    <td>Methods</td>
+    <td>
+    <pre>      #! name: have_dinner(food, drink)
+      #!
+      #! abstract: Called during the dinner mealtime.
+      #!
+      #! params:
+      #!    food  = The food to eat
+      #!    drink = The drink during the main course
+      #!
+      #! description:
+      #!    Have dinner allows a human to eat during the evening time.
+      #!    To eat about noon, {see: have_lunch(food, drink)}
+      def have_dinner(food, drink)</pre></td>
+  </tr>
+  <tr>
+    <td>Properties</td>
+    <td>
+    <pre>      #! name: weight
+      #!
+      #! abstract: The weight of the human.
+      #!
+      #! description:
+      #!    Get/Set the weight of the human.
+      attr_accessible :weight</pre></td>
+  </tr>
+</table>
 
 ## Contributing
 

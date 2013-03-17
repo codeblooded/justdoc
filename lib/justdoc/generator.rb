@@ -1,8 +1,13 @@
 # Copyright (c) 2013 Benjamin Reed 
 # Licensed under the MIT License (see LICENSE.txt)
 # 
-# justdoc.rb
+# generator.rb
 # ----------------------------------------------------------------------
-# The main file which links the ruby gem.
+# A file generator that relies on the output mechanism for different 
+# formats of documentation.
 
-require "justdoc/version"
+module JustDoc
+  class Generator
+    
+  end
+end

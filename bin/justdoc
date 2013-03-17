@@ -1,0 +1,54 @@
+#!/usr/bin/env ruby
+require 'justdoc'
+require 'optparse'
+
+options = {}
+
+commands = {
+  'setup' => OptionParser.new do |opts|
+    opts.banner = 'Usage: justdoc setup [flags] [options]'
+    opts.on("-v", "--[no-]verbose", "Run verbosely") do |v|
+      options[:verbose] = v
+    end
+    opts.on("-f", "--[no-]force", "Force execution") do |f|
+      options[:force] = f
+    end
+    opts.on("-h", "--[no-]hide", "Hide Docs from Git") do |h|
+      options[:hide] = h
+    end
+  end,
+  'run' => OptionParser.new do |opts|
+    opts.banner = 'Usage: justdoc run [flags] [options]'
+    opts.on("-v", "--[no-]verbose", "Run verbosely") do |v|
+      options[:verbose] = v
+    end
+    opts.on("-f", "--[no-]force", "Force execution") do |f|
+      options[:force] = f
+    end
+    opts.on("-r", "--[no-]recursive", "Run recursively") do |r|
+      options[:recursive] = r
+    end
+    opts.on("-d", "--[no-]redoc", "Redocument all") do |d|
+      options[:redoc] = d
+    end
+  end
+}
+
+command = ARGV.shift
+if commands[command]
+  commands[command].order!
+  puts "Command: #{command}"
+  p options
+  puts "ARGV: "
+  p ARGV
+else
+  if command == 'version'
+    puts "\tjustdoc v#{Justdoc::VERSION}"
+  else
+    puts "Usage: justdoc [command] [flags] [options]\n\n"
+    puts "Available Commands:"
+    puts "\tsetup\t  Setup a new repo to document"
+    puts "\trun\t  Create/Update documentation to reflect changes"
+    puts "\tversion\t  Show the current version installed"
+  end
+end
