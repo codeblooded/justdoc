@@ -18,5 +18,5 @@ module JustDoc
     def add_dependency(x, version)
       @dependencies << {gem_name: x, version: version}
     end
-    
+  end
 end

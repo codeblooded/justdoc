@@ -11,9 +11,9 @@ The communicating subdirectory contains tests that involve mainly communicating
 with external APIs.  In the case of Justdoc, these are mainly tests of
 communicating changes between the project and GIT.
 
-## Documenting
+## Scanning
 
-The documenting subdirectory contains tests for parsing and dividing comments into 
+The scanning subdirectory contains tests for parsing and dividing comments into 
 the appropriate documentation fields.  These are mainly tests of regular
 expressions and the returned values from the Justdoc::Recognizer.
 

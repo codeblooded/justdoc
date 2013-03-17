@@ -44,14 +44,7 @@ module Justdoc
     #     Detects the language comment syntax based on file extension.
     #!!
     def detect_source
-      @comment_syntax = case @file
-          when @file.include? ".rb"  then :rbased
-          when @file.include? ".c"   then :cbased
-          when @file.include? ".cs"  then :cbased
-          when @file.include? ".m"   then :cbased
-          when @file.include? ".cpp" then :cbased
-          when @file.include? ".h"   then :cbased
-      end
+      @comment_syntax = @file.include?(".rb") ? :rbased : :cbased
     end
     
   end
