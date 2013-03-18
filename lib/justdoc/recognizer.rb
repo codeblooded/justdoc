@@ -7,6 +7,14 @@
 # and their commenting syntax.
 module Justdoc
   class Recognizer
+    
+    #! constructs: Recognizer
+    #!!
+    def initialize
+      @documents    = {modules: [], classes: [], constructors: [], 
+        methods: [], properties: []}
+    end
+    
     #! method: c_recognize
     #  abstract: Recognizes C-based multiline comments
     #  params:
@@ -29,6 +37,10 @@ module Justdoc
     #!!
     def r_recognize(x)
       @matches = x.scan(/#!([^*]|\r\n|(#([^*])*))*?#!!/)
+    end
+    
+    def documents
+      @documents
     end
   end
 end

@@ -48,6 +48,7 @@ To document code, simply use comments with an added ! (exclamation point).  If y
       #! description:
       #!    The human class inherits methods from the Animal class.
       #!    It allows methods to be called on a human object.
+      #!!
       class Human &lt; Animal</pre></td>
   </tr>
   <tr>
@@ -64,17 +65,19 @@ To document code, simply use comments with an added ! (exclamation point).  If y
       #! description:
       #!    Have dinner allows a human to eat during the evening time.
       #!    To eat about noon, {see: have_lunch(food, drink)}
+      #!!
       def have_dinner(food, drink)</pre></td>
   </tr>
   <tr>
     <td>Properties</td>
     <td>
     <pre>      #! var: weight
-      #!
+      #! type: string
       #! abstract: The weight of the human.
       #!
       #! description:
       #!    Get/Set the weight of the human.
+      #!!
       attr_accessible :weight</pre></td>
   </tr>
 </table>

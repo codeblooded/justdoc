@@ -18,10 +18,6 @@ module Justdoc
     def initialize(file)
       @file         = file
       @recognizer   = Justdoc::Recognizer.new
-      @documents    = {modules: [], classes: [], constructors: [], 
-        methods: [], properties: []}
-      @current_read = ""
-      @language     = ""
     end
     
     #! method: read_and_recognize
