@@ -37,7 +37,7 @@ module Justdoc
     
     def scan_matches
       @matches.each { |match| find_type_and_document(match.to_s) }
-      debugger
+      # debugger
       @documents
     end
     
@@ -91,7 +91,7 @@ module Justdoc
       end
     
       def scan_property(str)
-        property_name = /property:\s*(.*)\n/.match(str)
+        property_name = match_and_normalize text: str, pattern: /var:\s*(.*)\n/
         @documents[:properties] << {name: property_name, 
           abstract: get_abstract(str), description: get_description(str), 
           type: get_type(str)}
@@ -99,15 +99,21 @@ module Justdoc
     
       def get_abstract(str)
         if (str.include? "abstract:")
-          res = /abstract:(\s+(.*)\n)/.match(str)
-          res = res.gsub(/abstract:\s+/, "") if !res.nil?
+          match_and_normalize text: str, pattern: /abstract:(\s+(.*)\n)/
+          # res = /abstract:(\s+(.*)\n)/.match(str)
+          #           res = res[0].gsub(/abstract:\s+/, "") if !res.nil?
+          #           title = res.split(/\s*:\s*/)
+          #           title[1]
         end
       end
       
       def get_description(str)
         if (str.include? "description:")
-          res = /description:\n((#|\*)*\s+(.*)\n)*/.match(str)
-          res = res.gsub(/description:\n/, "") if !res.nil?
+          match_and_normalize text: str, pattern: /description:\n((#|\*)*\s+(.*)\n)*/
+          # res = /description:\n((#|\*)*\s+(.*)\n)*/.match(str)
+          #           res = res.gsub(/description:\n/, "") if !res.nil?
+          #           title = res.split(/\s*:\s*/)
+          #           title[1]
         end
       end
       
@@ -121,12 +127,27 @@ module Justdoc
          pair = m2.split(/\s*=\s*/)
          params << {key: pair[0], value: pair[1]}
         end
+        params
       end
       
       def get_type(str)
-        res = /type:\s*(.*)\n/.match(str)
-        res = res[0]
-        res[:type].to_s
+        match_and_normalize text: str, pattern: /type:\s*(.*)\n/
+        # res = /type:\s*(.*)\n/.match(str)
+        #         res = res[0].strip
+        #         title = res.split(/\s*:\s*/)
+        #         title[1]
+      end
+      
+      def match_and_normalize(text: nil, pattern: //, delimiter: /\s*:\s*/)
+        ret = nil
+        res = pattern.match(text)
+        if !res.nil?
+          results = res.to_a
+          results[0].gsub(pattern, "")
+          title = results[0].split(delimiter)
+          ret = title[1].strip
+        end
+        ret
       end
     
   end
