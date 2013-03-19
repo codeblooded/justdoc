@@ -8,15 +8,21 @@
 module JustDoc
   class OutputSpecification
     
-    attr_accessor :name, :author, :files
-    
-    def initialize
-      @dependencies = []
-      yield self
+    def respond_to_module
+      raise NOTIMPLEMENTEDERROR
     end
     
-    def add_dependency(x, version)
-      @dependencies << {gem_name: x, version: version}
+    def respond_to_class
+      raise NOTIMPLEMENTEDERROR
     end
+    
+    def respond_to_method
+      raise NOTIMPLEMENTEDERROR
+    end
+    
+    def respond_to_property
+      raise NOTIMPLEMENTEDERROR
+    end
+    
   end
 end

@@ -9,5 +9,21 @@
 module JustDoc
   class Generator
     
+    def initialize(documents)
+      @documents = documents
+    end
+    
+    def write_or_update(&writes)
+      File.open(@filename, 'w+') do |f|
+        writes.call(f)
+      end
+    end
+    
+    private
+    
+      def prepare_output(format)
+        
+      end
+    
   end
 end

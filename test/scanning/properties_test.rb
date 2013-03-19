@@ -7,7 +7,8 @@ describe Justdoc::Recognizer do
   it 'should recognize a property' do
     input = "#! var: height \n #! type: integer \n #!!"
     r     = Justdoc::Recognizer.new
-    r.r_recognize(input)
+    r.recognize(input, :rstyle)
+    r.scan_matches
     results = r.documents[:properties]
     results.wont_be_empty
   end
@@ -17,17 +18,17 @@ describe Justdoc::Recognizer do
     #! abstract: The weight of the human. \n #! \n #! description: 
     #!    Get/Set the weight of the human. \n #!!"
     r     = Justdoc::Recognizer.new
-    r.r_recognize(input)
+    r.recognize(input, :rstyle)
     expected = {var: 'weight', type: 'string', abstract: 'The weight of the human.', description: 'Get/Set the weight of the human.'}
-    r.documents[:properties].must_include expected
+    r.scan_matches[:properties].must_include expected
   end
   
   it 'should recognize type of a property' do
     input = "#! var: height \n #! type: integer \n #!!"
     r     = Justdoc::Recognizer.new
-    r.r_recognize(input)
-    results = r.documents[:properties]
-    results[0][:type].must_equal :integer
+    r.recognize(input, :rstyle)
+    results = r.scan_matches
+    results[:type].must_equal :integer
   end
 
 end

@@ -29,9 +29,9 @@ module Justdoc
     #     arrays and hashes that make up the documents.
     #!!
     def read_and_recognize
-      f    = File.read(@file)
-      code = @recognizer.detect_source
-      @comment_syntax == :rbased ? @recognizer.r_recognize(f) : @recognizer.c_recognize(f)
+      f = File.read(@file)
+      @recognizer.recognize(f.strip, detect_source)
+      @documents = @recognizer.scan_matches
     end
     
     #! method: detect_source
@@ -40,7 +40,11 @@ module Justdoc
     #     Detects the language comment syntax based on file extension.
     #!!
     def detect_source
-      @comment_syntax = @file.include?(".rb") ? :rbased : :cbased
+      comment_syntax = @file.include?(".rb") ? :rstyle : :cstyle
+    end
+    
+    def document_to_generator
+      @generator = Generator.new(@documents)
     end
     
   end

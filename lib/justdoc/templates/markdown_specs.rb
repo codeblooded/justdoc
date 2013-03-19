@@ -1,10 +1,27 @@
 require '../output'
 
-OutputSpecification.new do |osp|
-  ops.name          = "markdown"
-  ops.author        = ["Benjamin Reed", "benvreed@gmail.com"]
-  ops.files         = ["markdown/*.md"]
-  
-  ops.add_dependency 'github-markdown', '>= 1.0'
+module Justdoc
+  class Markdown < OutputSpecification
+    
+    def initialize
+      
+    end
+    
+    def respond_to_module
+      
+    end
+    
+    def respond_to_class
+      
+    end
+    
+    def respond_to_method
+      
+    end
+    
+    def respond_to_property
+      
+    end
+    
+  end
 end
-3
