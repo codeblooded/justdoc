@@ -13,5 +13,8 @@ require "justdoc/recognizer"
 require "justdoc/outputs/markdown"
 
 module Justdoc
-  
+  def self.setup(data: "")
+    reader = Justdoc::Reader.new(data)
+    r.read_and_recognize
+  end
 end

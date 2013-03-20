@@ -41,8 +41,7 @@ if commands[command]
   case command
   when "run"
     if !option.nil?
-      r = Justdoc::Reader.new(option)
-      r.read_and_recognize
+      Justdoc.setup data: option
     else
       puts "An file is required for now."  
     end
