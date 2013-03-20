@@ -112,7 +112,7 @@ module Justdoc
       
       def scan_constructor(str)
         constructs = match_and_normalize text: str, pattern: /constructs:\s*(.*)\n/
-        returns    = get_returns(str) || "Instantiates a new #{constructs}"
+        returns    = get_returns(str) || "A new instance of #{constructs}"
         @documents[:constructors] << {name: constructs, 
           abstract: get_abstract(str), description: get_description(str), 
           params: get_params(str), returns: returns}
