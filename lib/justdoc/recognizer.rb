@@ -18,7 +18,7 @@ module Justdoc
       @documents = {modules: [], classes: [], constructors: [], 
         methods: [], properties: []}
     end
-  
+    
     #! method: recognize
     #  abstract: Recognizes documentation in comments
     #  params:
@@ -100,20 +100,12 @@ module Justdoc
       def get_abstract(str)
         if (str.include? "abstract:")
           match_and_normalize text: str, pattern: /abstract:(\s+(.*)\n)/
-          # res = /abstract:(\s+(.*)\n)/.match(str)
-          #           res = res[0].gsub(/abstract:\s+/, "") if !res.nil?
-          #           title = res.split(/\s*:\s*/)
-          #           title[1]
         end
       end
       
       def get_description(str)
         if (str.include? "description:")
-          match_and_normalize text: str, pattern: /description:\n((#|\*)*\s+(.*)\n)*/
-          # res = /description:\n((#|\*)*\s+(.*)\n)*/.match(str)
-          #           res = res.gsub(/description:\n/, "") if !res.nil?
-          #           title = res.split(/\s*:\s*/)
-          #           title[1]
+          match_and_normalize text: str, pattern: /description:\n((#|\*)*\s+(.*)\n)*/, multiline: true
         end
       end
       
@@ -132,21 +124,26 @@ module Justdoc
       
       def get_type(str)
         match_and_normalize text: str, pattern: /type:\s*(.*)\n/
-        # res = /type:\s*(.*)\n/.match(str)
-        #         res = res[0].strip
-        #         title = res.split(/\s*:\s*/)
-        #         title[1]
       end
       
-      def match_and_normalize(text: nil, pattern: //, delimiter: /\s*:\s*/)
+      def match_and_normalize(text: nil, pattern: //, delimiter: /\s*:\s*/,
+         multiline: false)
         ret = nil
         res = pattern.match(text)
+        # if a pattern is found
         if !res.nil?
           results = res.to_a
           results[0].gsub(pattern, "")
           title = results[0].split(delimiter)
           ret = title[1].strip
+          # if multiline, remove comment marks
+          if multiline
+            ret = ret.gsub(/(#!|\/\**)*/, "")
+            ret = ret.gsub(/\s{2,}/, " ")
+            ret = ret.strip
+          end
         end
+        # return ret
         ret
       end
     
