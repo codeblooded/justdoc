@@ -41,7 +41,7 @@ if commands[command]
   case command
   when "run"
     if !option.nil?
-      Justdoc.setup data: option
+      p Justdoc.setup data: option
     else
       puts "An file is required for now."  
     end

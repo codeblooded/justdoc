@@ -15,6 +15,6 @@ module Justdoc
   def self.setup(data: "")
     reader = Justdoc::Reader.new(data)
     reader.read_and_recognize
-    p reader.document_to_generator
+    reader.document_to_generator
   end
 end
