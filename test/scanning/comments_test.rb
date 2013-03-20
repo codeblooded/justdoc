@@ -54,10 +54,73 @@ describe Justdoc::Recognizer do
   end
   
   it 'detects a r-style comment across multiple lines' do
-    comment = "#! first part \n # continued second part \n #!!"
+    comment = "#! first part
+    # continued second part
+    #!!"
     rec = Justdoc::Recognizer.new()
     match = rec.recognize(comment, :rstyle)
     match.wont_be_empty
+  end
+  
+  it 'should detect and match rstyle comments' do
+    comment = "#! class: Recognizer
+    #  abstract: Recognizes Documentation in Comments 
+    #  description:
+    #    The abstraction of recognizing documentation in files.
+    #!!"
+    rec = Justdoc::Recognizer.new()
+    match = rec.recognize(comment, :rstyle)
+    matches = rec.scan_matches
+    matches.wont_be_nil
+  end
+  
+  it 'should detect and match abstract sections in cstyle comments' do
+    comment = "/*! class: Here 
+    abstract: abstracted
+    description:
+        long description
+    */"
+    rec = Justdoc::Recognizer.new()
+    rec.recognize(comment, :cstyle)
+    matches = rec.scan_matches
+    matches[:classes][0][:abstract].must_equal "abstracted"
+  end
+  
+  it 'should detect and match description sections in cstyle comments' do
+    comment = "/*! class: Here 
+    abstract: abstracted
+    description:
+        long description
+    */"
+    rec = Justdoc::Recognizer.new()
+    rec.recognize(comment, :cstyle)
+    matches = rec.scan_matches
+    matches[:classes][0][:description].must_equal "long description"
+  end
+  
+  
+  it 'should detect and match abstract sections in rstyle comments' do
+    comment = "#! class: Recognizer
+    #  abstract: Recognizes Documentation in Comments
+    #  description:
+    #     The abstraction of recognizing documentation in files.
+    #!!"
+    rec = Justdoc::Recognizer.new()
+    match = rec.recognize(comment, :rstyle)
+    matches = rec.scan_matches
+    matches[:classes][0][:abstract].must_equal "Recognizes Documentation in Comments"
+  end
+  
+  it 'should detect and match description sections in rstyle comments' do
+    comment = "#! class: Here 
+    # abstract: abstracted
+    # description:
+        long description
+    #!!"
+    rec = Justdoc::Recognizer.new()
+    rec.recognize(comment, :rstyle)
+    matches = rec.scan_matches
+    matches[:classes][0][:description].must_equal "long description"
   end
   
 end

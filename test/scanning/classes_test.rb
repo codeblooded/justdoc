@@ -51,8 +51,4 @@ describe Justdoc::Recognizer do
     results[0][:description].must_equal "The human class inherits methods from the Animal class. It allows methods to be called on a human object."
   end
   
-  it 'wont recognize a method as a class' do
-    skip
-  end
-  
 end
