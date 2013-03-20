@@ -1,7 +1,5 @@
-require '../output'
-
 module Justdoc
-  class Markdown < OutputSpecification
+  class Markdown
     
     def initialize
       @content = ""
