@@ -22,7 +22,8 @@ module Justdoc
     #! method: recognize
     #  abstract: Recognizes documentation in comments
     #  params:
-    #     x   =   The String to match
+    #     x       =   The String to match
+    #     style   =   The Style of Comments (C-Style or Ruby-Style)
     #  description:
     #     A method that recognizes comments with an ! 
     #     implying the use of Justdoc to document.
@@ -115,11 +116,11 @@ module Justdoc
         if !res.nil?
           res = res.gsub(/params:\n/, "")
           matches = res.scan(/(.*)=(.*)\n/).to_a
-          # matches.each do |m1|
-          #            m2 = m1.strip
-          #            pair = m2.split(/\s*=\s*/)
-           params << {key: matches[0][0].gsub(/\s*#*!*/, ""), value: matches[0][1].strip}
-          # end
+          matches.each do |m1|
+             params << {key: m1[0].gsub(/\s*#*!*/, ""), value: m1[1].strip}
+             # m2 = m1.strip
+             # pair = m2.split(/\s*=\s*/)
+          end
         end
         params
       end
