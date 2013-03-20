@@ -112,16 +112,17 @@ module Justdoc
       
       def scan_constructor(str)
         constructs = match_and_normalize text: str, pattern: /constructs:\s*(.*)\n/
+        returns    = get_returns(str) || "Instantiates a new #{constructs}"
         @documents[:constructors] << {name: constructs, 
           abstract: get_abstract(str), description: get_description(str), 
-          params: get_params(str)}
+          params: get_params(str), returns: returns}
       end
     
       def scan_method(str)
         method_name = match_and_normalize text: str, pattern: /method:\s*(.*)\n/
         @documents[:methods] << {name: method_name, 
           abstract: get_abstract(str), description: get_description(str), 
-          params: get_params(str)}
+          params: get_params(str), returns: get_returns(str)}
       end
     
       def scan_property(str)
@@ -158,6 +159,12 @@ module Justdoc
           end
         end
         params
+      end
+      
+      def get_returns(str)
+        if (str.include? "returns:")
+          match_and_normalize text: str, pattern: /returns:\s*(.*)\n/
+        end
       end
       
       def get_type(str)
