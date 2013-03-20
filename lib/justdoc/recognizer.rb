@@ -8,6 +8,7 @@
 require 'debugger'
 
 module Justdoc
+  
   class Recognizer
     
     attr_accessor :style
@@ -36,12 +37,26 @@ module Justdoc
       end
     end
     
+    #! method: scan_matches
+    #  abstract: Passes each match to be ordered and documented.
+    #  description:
+    #     scan_matches iterates over each match and passes the
+    #     match to find_type_and_document, a private method in
+    #     the Recognizer class.  It relies on the @matches
+    #     instance variable to be set.
+    #  returns: The ordered documents
+    #!!
     def scan_matches
       @matches.each { |match| find_type_and_document(match.to_s) }
       # debugger
       @documents
     end
     
+    #! method: documents
+    #  description:
+    #     A method used primarily for testing purposes. (DEPRECATED)
+    #  returns: The ordered documents
+    #!!
     def documents
       @documents
     end
@@ -57,6 +72,13 @@ module Justdoc
         matches
       end
     
+      #! method: find_type_and_document
+      #  abstract: Finds type and documents
+      #  params:
+      #    match = The string to accept
+      #  description:
+      #    Finds the type of document and directs to appropriate method.
+      #!!
       def find_type_and_document(match)
         if match.include? "module:"
           scan_module(match)
