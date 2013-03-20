@@ -37,10 +37,12 @@ commands = {
 command = ARGV.shift
 if commands[command]
   commands[command].order!
-  puts "Command: #{command}"
-  p options
-  puts "ARGV: "
-  p ARGV
+  case command
+  when "run"
+    p ARGV.shift    # 
+        # r = Justdoc::Reader.new(ARGV.shift)
+        # r.read_and_recognize
+  end
 else
   if command == 'version'
     puts "\tjustdoc v#{Justdoc::VERSION}"

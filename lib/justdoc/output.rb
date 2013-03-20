@@ -8,19 +8,23 @@
 module JustDoc
   class OutputSpecification
     
-    def respond_to_module
+    def respond_to_module(data)
       raise NOTIMPLEMENTEDERROR
     end
     
-    def respond_to_class
+    def respond_to_class(data)
       raise NOTIMPLEMENTEDERROR
     end
     
-    def respond_to_method
+    def respond_to_method(data)
       raise NOTIMPLEMENTEDERROR
     end
     
-    def respond_to_property
+    def respond_to_property(data)
+      raise NOTIMPLEMENTEDERROR
+    end
+    
+    def end_of_file
       raise NOTIMPLEMENTEDERROR
     end
     

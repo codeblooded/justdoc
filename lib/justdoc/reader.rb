@@ -44,7 +44,8 @@ module Justdoc
     end
     
     def document_to_generator
-      @generator = Generator.new(@documents)
+      @markdown = Markdown.new
+      @markdown.end_of_file(@documents)
     end
     
   end
