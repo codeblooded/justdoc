@@ -4,9 +4,13 @@ A simple documentation generator that does the hard work, keeps comments readabl
 
 ## Installation
 
-JustDoc is packaged as a RubyGem. It requires Ruby 2.0 or greater installed. To install, simply run:
+JustDoc, once stable, will be packaged as a RubyGem. It requires Ruby 2.0 or greater installed. Then you can simply run:
 
     $ gem install justdoc
+    
+However, right now it must be installed by cloning the Github repo, navigating to the directory and running:
+
+    $ rake install
 
 __NOTE: It is required that GIT be installed on your system and used in the project to be documented.__
 

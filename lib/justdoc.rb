@@ -10,5 +10,6 @@ require "justdoc/generator"
 require "justdoc/output"
 require "justdoc/reader"
 require "justdoc/recognizer"
+require "justdoc/outputs/markdown"
 
 module Justdoc; end
