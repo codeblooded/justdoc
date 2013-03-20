@@ -12,4 +12,6 @@ require "justdoc/reader"
 require "justdoc/recognizer"
 require "justdoc/outputs/markdown"
 
-module Justdoc; end
+module Justdoc
+  
+end
