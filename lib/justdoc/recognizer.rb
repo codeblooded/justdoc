@@ -65,26 +65,24 @@ module Justdoc
           scan_method(match)
         elsif match.include? "var:"
           scan_property(match)
-        else
-          raise match.to_s
         end
       end
     
     
       def scan_module(str)
-        module_name = /module:\s*(.*)\n/.match(str)
+        module_name = match_and_normalize text: str, pattern: /module:\s*(.*)\n/
         @documents[:modules] << {name: module_name, 
           abstract: get_abstract(str), description: get_description(str)}
       end
     
       def scan_class(str)
-        class_name = /class:\s*(.*)\n/.match(str)
+        class_name = match_and_normalize text: str, pattern: /class:\s*(.*)\n/
         @documents[:classes] << {name: class_name, 
           abstract: get_abstract(str), description: get_description(str)}
       end
     
       def scan_method(str)
-        method_name = /method:\s*(.*)\n/.match(str)
+        method_name = match_and_normalize text: str, pattern: /method:\s*(.*)\n/
         @documents[:methods] << {name: method_name, 
           abstract: get_abstract(str), description: get_description(str), 
           params: get_params(str)}
@@ -111,13 +109,17 @@ module Justdoc
       
       def get_params(str)
         params = []
-        res = /params:\n((#|\*)*\s+(.*)=(.*)\n)*/.match(str)
-        res = res.gsub(/params:\n/, "")
-        matches = res.scan(/(.*)=(.*)\n/)
-        matches.each do |m1|
-         m2 = m1.strip
-         pair = m2.split(/\s*=\s*/)
-         params << {key: pair[0], value: pair[1]}
+        mas = /params:\n((#|\*)*\s+(.*)=(.*)\n)*/.match(str)
+        mas = mas.to_a
+        res = mas[0]
+        if !res.nil?
+          res = res.gsub(/params:\n/, "")
+          matches = res.scan(/(.*)=(.*)\n/).to_a
+          # matches.each do |m1|
+          #            m2 = m1.strip
+          #            pair = m2.split(/\s*=\s*/)
+           params << {key: matches[0][0].gsub(/\s*#*!*/, ""), value: matches[0][1].strip}
+          # end
         end
         params
       end
@@ -137,8 +139,8 @@ module Justdoc
           title = results[0].split(delimiter)
           ret = title[1].strip
           # if multiline, remove comment marks
-          if multiline
-            ret = ret.gsub(/(#!|\/\**)*/, "")
+          if multiline == true
+            ret = ret.gsub(/(#!*|\/\**)*/, "")
             ret = ret.gsub(/\s{2,}/, " ")
             ret = ret.strip
           end

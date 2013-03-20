@@ -24,7 +24,7 @@ module Justdoc
     #  abstract: Read from the file and Let the Recognizer parse
     #  description:
     #     A method to read from the file specified in the constructor.
-    #     It uses the instantiated Justdoc::Recognizer to parse the
+    #     It uses the instantiated "Justdoc-Recognizer" to parse the
     #     file for documentation.  Finally, it sorts into the varies
     #     arrays and hashes that make up the documents.
     #!!

@@ -26,7 +26,7 @@ module Justdoc
     end
     
     def end_of_file(data)
-      p data
+      data
     end
     
   end
