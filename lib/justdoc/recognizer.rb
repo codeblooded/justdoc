@@ -112,7 +112,7 @@ module Justdoc
       
       def scan_constructor(str)
         constructs = match_and_normalize text: str, pattern: /constructs:\s*(.*)\n/
-        @documents[:methods] << {class_of: constructs, 
+        @documents[:constructors] << {name: constructs, 
           abstract: get_abstract(str), description: get_description(str), 
           params: get_params(str)}
       end
