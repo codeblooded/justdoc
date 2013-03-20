@@ -8,7 +8,11 @@
 require 'debugger'
 
 module Justdoc
-  
+  #! class: Recognizer
+  #  abstract: Recognizes Documentation in Comments
+  #  description:
+  #    The abstraction of recognizing documentation in files.
+  #!!
   class Recognizer
     
     attr_accessor :style
@@ -84,6 +88,8 @@ module Justdoc
           scan_module(match)
         elsif match.include? "class:"
           scan_class(match)
+        elsif match.include? "constructs:"
+          scan_constructor(match)
         elsif match.include? "method:"
           scan_method(match)
         elsif match.include? "var:"
@@ -102,6 +108,13 @@ module Justdoc
         class_name = match_and_normalize text: str, pattern: /class:\s*(.*)\n/
         @documents[:classes] << {name: class_name, 
           abstract: get_abstract(str), description: get_description(str)}
+      end
+      
+      def scan_constructor(str)
+        constructs = match_and_normalize text: str, pattern: /constructs:\s*(.*)\n/
+        @documents[:methods] << {class_of: constructs, 
+          abstract: get_abstract(str), description: get_description(str), 
+          params: get_params(str)}
       end
     
       def scan_method(str)
