@@ -1,5 +1,7 @@
 # Justdoc
 
+_NOTE: THIS IS A WORK IN DEVELOPMENT AND IS NOT PRODUCTION READY._
+
 A simple documentation generator that does the hard work, keeps comments readable, and does not require large configuration files. 
 
 ## Installation
@@ -18,7 +20,7 @@ __NOTE: It is required that GIT be installed on your system and used in the proj
 
 To initially setup documentation in a repo, tell JustDoc to track the current directory recursively:
 
-    $ justdoc track
+    $ justdoc setup
 
 And you'll be prompted to answer some questions. This is a one time thing, and you should never have to worry about configuring again.  
 
@@ -42,6 +44,15 @@ To document code, simply use comments with an added ! (exclamation point).  If y
 
 <table>
   <tr><th colspan="2" style="text-align:center;">Documentation Syntax Table</th></tr>
+  <tr>
+    <td>Modules</td>
+    <td>
+    <pre>      #! module: Creature
+      #!
+      #! abstract: The module of Creatures.
+      #!!
+      module Creature</pre></td>
+  </tr>
   <tr>
     <td>Classes</td>
     <td>
