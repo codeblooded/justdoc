@@ -97,19 +97,42 @@ module Justdoc
         end
       end
     
-    
+      #! module: scan_module
+      #  abstract: Scans a module for documentation
+      #  params:
+      #    str = The unsanitized match containing the module documentation.
+      #  description:
+      #    Calls appropriate modules and generates a hash to add the module
+      #    to the documents.
+      #!!
       def scan_module(str)
         module_name = match_and_normalize text: str, pattern: /module:\s*(.*)\n/
         @documents[:modules] << {name: module_name, 
           abstract: get_abstract(str), description: get_description(str)}
       end
-    
+      
+      #! class: scan_class
+      #  abstract: Scans a class for documentation
+      #  params:
+      #    str = The unsanitized match containing the class documentation.
+      #  description:
+      #    Calls appropriate classs and generates a hash to add the class
+      #    to the documents.
+      #!!
       def scan_class(str)
         class_name = match_and_normalize text: str, pattern: /class:\s*(.*)\n/
         @documents[:classes] << {name: class_name, 
           abstract: get_abstract(str), description: get_description(str)}
       end
       
+      #! constructor: scan_constructor
+      #  abstract: Scans a constructor for documentation
+      #  params:
+      #    str = The unsanitized match containing the constructor documentation.
+      #  description:
+      #    Calls appropriate constructors and generates a hash to add the constructor
+      #    to the documents.
+      #!!
       def scan_constructor(str)
         constructs = match_and_normalize text: str, pattern: /constructs:\s*(.*)\n/
         returns    = get_returns(str) || "A new instance of #{constructs}"
@@ -117,14 +140,30 @@ module Justdoc
           abstract: get_abstract(str), description: get_description(str), 
           params: get_params(str), returns: returns}
       end
-    
+      
+      #! method: scan_method
+      #  abstract: Scans a method for documentation
+      #  params:
+      #    str = The unsanitized match containing the method documentation.
+      #  description:
+      #    Calls appropriate methods and generates a hash to add the method
+      #    to the documents.
+      #!!
       def scan_method(str)
         method_name = match_and_normalize text: str, pattern: /method:\s*(.*)\n/
         @documents[:methods] << {name: method_name, 
           abstract: get_abstract(str), description: get_description(str), 
           params: get_params(str), returns: get_returns(str)}
       end
-    
+      
+      #! method: scan_property
+      #  abstract: Scans a property for documentation
+      #  params:
+      #    str = The unsanitized match containing the property documentation.
+      #  description:
+      #    Calls appropriate methods and generates a hash to add the property
+      #    to the documents.
+      #!!
       def scan_property(str)
         property_name = match_and_normalize text: str, pattern: /var:\s*(.*)\n/
         @documents[:properties] << {name: property_name, 
@@ -132,18 +171,43 @@ module Justdoc
           type: get_type(str)}
       end
     
+      #! method: get_abstract
+      #  abstract: Gets the abstract section for any documentation
+      #  params:
+      #    str = The unsanitized comment of the method.
+      #  description:
+      #    Uses match_and_normalize to match and return the abstract section.
+      #  returns: The abstract section
+      #!!
       def get_abstract(str)
         if (str.include? "abstract:")
           match_and_normalize text: str, pattern: /abstract:(\s+(.*)\n)/
         end
       end
       
+      #! method: get_description
+      #  abstract: Gets the description for any documentation
+      #  params:
+      #    str = The unsanitized comment of the method.
+      #  description:
+      #    Uses match_and_normalize with multiline: true to match and return the full description.
+      #  returns: The full description
+      #!!
       def get_description(str)
         if (str.include? "description:")
           match_and_normalize text: str, pattern: /description:\n((#|\*)*\s+(.*)\n)*/, multiline: true
         end
       end
       
+      #! method: get_params
+      #  abstract: Gets the parameters of a Method
+      #  params:
+      #    str = The unsanitized comment of the method.
+      #  description:
+      #    Scans the parameters of a Method.  Doesn't rely on the match_and_normalize method, because
+      #    it contains an irregular syntax.
+      #  returns: Array of parameters for a method
+      #!!
       def get_params(str)
         params = []
         mas = /params:\n((#|\*)*\s+(.*)=(.*)\n)*/.match(str)
@@ -161,16 +225,48 @@ module Justdoc
         params
       end
       
+      #! method: get_returns
+      #  abstract: Gets what a Method Returns
+      #  params:
+      #    str = The unsanitized comment of the method.
+      #  description:
+      #    Gets what a method returns if it contains a "returns:" statement.
+      #  returns: What a method returns or nil
+      #!!
       def get_returns(str)
         if (str.include? "returns:")
           match_and_normalize text: str, pattern: /returns:\s*(.*)\n/
         end
       end
       
+      #! method: get_type
+      #  abstract: Gets a Match for the Type of Property
+      #  params:
+      #    str = The unsanitized comment of the property.
+      #  description:
+      #    Gets the data type specified for a property.
+      #  returns: Property's Data Type or nil
+      #!!
       def get_type(str)
-        match_and_normalize text: str, pattern: /type:\s*(.*)\n/
+        if (str.include? "type:")
+          match_and_normalize text: str, pattern: /type:\s*(.*)\n/
+        end
       end
       
+      #! method: match_and_normalize
+      #  abstract: Matches a Pattern and Sanitizes the Result
+      #  params:
+      #    text      = The string to check
+      #    pattern   = The regex to match
+      #    delimiter = The regex to split data upon
+      #    multiline = A boolean indicating if it should normalize across multiple lines
+      #  description:
+      #    Matches a string, "text:", against a regex, "pattern:", and splits the results
+      #    using the "delimiter:" which defaults to a colon and surrounding whitespace.
+      #    Finally, it checks if it should normalize across multiple lines using, "multiline:".
+      #    Unless specified, it assumes multiline: false.
+      #  returns: The second element in the match split on the delimiter, or nil.
+      #!!
       def match_and_normalize(text: nil, pattern: //, delimiter: /\s*:\s*/,
          multiline: false)
         ret = nil
