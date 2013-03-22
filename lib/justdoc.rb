@@ -14,6 +14,7 @@ require "justdoc/outputs/markdown"
 
 module Justdoc
   def self.setup(data: "")
+    data = File.expand_path(data, Dir.pwd)
     reader = Justdoc::Reader.new(data)
     reader.read_and_recognize
     reader.document_to_generator
