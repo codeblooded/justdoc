@@ -13,7 +13,12 @@ require "justdoc/recognizer"
 require "justdoc/outputs/markdown"
 
 module Justdoc
-  def self.setup(data: "")
+  def run_with_git
+    Setup.create_directory_and_config
+    Setup.add_to_gitignore
+  end
+  
+  def run_with_file(data)
     data = File.expand_path(data, Dir.pwd)
     reader = Justdoc::Reader.new(data)
     reader.read_and_recognize
