@@ -190,7 +190,7 @@ module Justdoc
       #  params:
       #    str = The unsanitized comment of the method.
       #  description:
-      #    Uses match_and_normalize with multiline: true to match and return the full description.
+      #    Uses match_and_normalize with multiline to true to match and return the full description.
       #  returns: The full description
       #!!
       def get_description(str)
@@ -230,7 +230,7 @@ module Justdoc
       #  params:
       #    str = The unsanitized comment of the method.
       #  description:
-      #    Gets what a method returns if it contains a "returns:" statement.
+      #    Gets what a method returns if it contains a returns statement.
       #  returns: What a method returns or nil
       #!!
       def get_returns(str)
@@ -261,10 +261,10 @@ module Justdoc
       #    delimiter = The regex to split data upon
       #    multiline = A boolean indicating if it should normalize across multiple lines
       #  description:
-      #    Matches a string, "text:", against a regex, "pattern:", and splits the results
-      #    using the "delimiter:" which defaults to a colon and surrounding whitespace.
-      #    Finally, it checks if it should normalize across multiple lines using, "multiline:".
-      #    Unless specified, it assumes multiline: false.
+      #    Matches a string, text, against a regex, pattern, and splits the results
+      #    using the delimiter which defaults to a colon and surrounding whitespace.
+      #    Finally, it checks if it should normalize across multiple lines using, multiline.
+      #    Unless specified, it assumes multiline to false.
       #  returns: The second element in the match split on the delimiter, or nil.
       #!!
       def match_and_normalize(text: nil, pattern: //, delimiter: /\s*:\s*/,
