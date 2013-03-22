@@ -2,34 +2,34 @@
 require 'justdoc'
 require 'optparse'
 
-options = {}
+$options = {}
 
 commands = {
   'setup' => OptionParser.new do |opts|
     opts.banner = 'Usage: justdoc setup [flags] [options]'
     opts.on("-v", "--[no-]verbose", "Run verbosely") do |v|
-      options[:verbose] = v
+      $options[:verbose] = v
     end
     opts.on("-f", "--[no-]force", "Force execution") do |f|
-      options[:force] = f
+      $options[:force] = f
     end
     opts.on("-h", "--[no-]hide", "Hide Docs from Git") do |h|
-      options[:hide] = h
+      $options[:hide] = h
     end
   end,
   'run' => OptionParser.new do |opts|
     opts.banner = 'Usage: justdoc run [flags] [options]'
     opts.on("-v", "--[no-]verbose", "Run verbosely") do |v|
-      options[:verbose] = v
+      $options[:verbose] = v
     end
     opts.on("-f", "--[no-]force", "Force execution") do |f|
-      options[:force] = f
+      $options[:force] = f
     end
     opts.on("-r", "--[no-]recursive", "Run recursively") do |r|
-      options[:recursive] = r
+      $options[:recursive] = r
     end
     opts.on("-d", "--[no-]redoc", "Redocument all") do |d|
-      options[:redoc] = d
+      $options[:redoc] = d
     end
   end
 }
@@ -39,6 +39,8 @@ if commands[command]
   commands[command].order!
   option = ARGV.shift
   case command
+  when "setup"
+    p Justdoc.run_setup
   when "run"
     if !option.nil?
       p Justdoc.run_with_file option
