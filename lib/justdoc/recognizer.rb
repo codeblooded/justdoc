@@ -97,7 +97,7 @@ module Justdoc
         end
       end
     
-      #! module: scan_module
+      #! method: scan_module
       #  abstract: Scans a module for documentation
       #  params:
       #    str = The unsanitized match containing the module documentation.
@@ -111,7 +111,7 @@ module Justdoc
           abstract: get_abstract(str), description: get_description(str)}
       end
       
-      #! class: scan_class
+      #! method: scan_class
       #  abstract: Scans a class for documentation
       #  params:
       #    str = The unsanitized match containing the class documentation.

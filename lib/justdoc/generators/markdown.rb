@@ -2,7 +2,7 @@ module Justdoc
   class Markdown
     
     def initialize
-      @content = nil
+      @content = ""
       @current_string = ""
       @methods_stored = false
       @properties_stored = false
@@ -17,7 +17,7 @@ module Justdoc
     end
     
     def respond_to_constructor(data)
-      respond_to_method(data)
+      write_section_with_subsections title: "(new) "+data[:name], level: 3, params: data[:params], returns: data[:returns]
     end
     
     def respond_to_method(data)
@@ -42,18 +42,24 @@ module Justdoc
     
     private
       
-      def write_section(title: "", level: "", body: "", newline: false)
+      def write_section(title: "", level: 1, body: "", newline: false)
         write_header text: title, level: level
         write_body   text: body,  newline: newline
       end
       
-      def write_section_with_subsections(title: "", level: "", abstract: "", description: "", params: nil, returns: nil)
+      def write_section_with_subsections(title: "", level: 1, abstract: nil, description: nil, params: nil, returns: nil)
         write_header text: title, level: level
         write_params_list(params) if !params.nil?
-        write_header text: "Abstract", level: (level + 1)
-        write_body   text: abstract
-        write_header text: "Description", level: (level + 1)
-        write_body   text: description
+        
+        if abstract
+          write_header text: "Abstract", level: (level + 1)
+          write_body   text: abstract
+        end
+        
+        if description
+          write_header text: "Description", level: (level + 1)
+          write_body   text: description
+        end
         
         if returns
           write_header text: "Returns", level: (level + 1)
