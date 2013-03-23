@@ -16,8 +16,10 @@ require "justdoc/generators/markdown"
 module Justdoc
   
   def self.run_setup
+    Setup.ask_questions
     Setup.create_directory_and_config
     Setup.add_to_gitignore
+    "=> Justdoc is configured and ready to document."
   end
   
   def self.run_with_git
@@ -38,7 +40,7 @@ module Justdoc
     docs = reader.read_and_recognize
     mrd = Markdown.new
     gen = Generator.new(mrd)
-    gen.generate_file name: data, with: docs
+    gen.generate_file name: docs[:classes][0][:name]+".md", with: docs
   end
   
 end

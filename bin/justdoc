@@ -40,7 +40,7 @@ if commands[command]
   option = ARGV.shift
   case command
   when "setup"
-    p Justdoc.run_setup
+    puts Justdoc.run_setup
   when "run"
     if !option.nil?
       Justdoc.run_with_file option

@@ -4,6 +4,7 @@ module Justdoc
     def initialize
       @content = ""
       @current_string = ""
+      @constructors_stored = false
       @methods_stored = false
       @properties_stored = false
     end
@@ -17,9 +18,9 @@ module Justdoc
     end
     
     def respond_to_constructor(data)
-      if !@methods_stored
-        write_header(text: "Methods", level: 2)
-        @methods_stored = true
+      if !@constructors_stored
+        write_header(text: "Constructors", level: 2)
+        @constructors_stored = true
       end
       write_section_with_subsections title: "(new) "+data[:name], level: 3, params: data[:params], returns: data[:returns]
     end
@@ -53,21 +54,25 @@ module Justdoc
       
       def write_section_with_subsections(title: "", level: 1, abstract: nil, description: nil, params: nil, returns: nil)
         write_header text: title, level: level
-        write_params_list(params) if !params.nil?
-        
+        write_whitespace
+        if !params.nil?
+          write_params_list(params)
+          write_whitespace
+        end
         if abstract
           write_header text: "Abstract", level: (level + 1)
           write_body   text: abstract
+          write_whitespace
         end
-        
         if description
           write_header text: "Description", level: (level + 1)
           write_body   text: description
+          write_whitespace
         end
-        
         if returns
           write_header text: "Returns", level: (level + 1)
           write_body   text: returns
+          write_whitespace
         end
       end
       
@@ -89,6 +94,10 @@ module Justdoc
       
       def write_body(text: "", newline: false)
         @content += newline ? "#{text}  \n" : "#{text}\n"
+      end
+      
+      def write_whitespace
+        @content += "\n"
       end
   end
 end

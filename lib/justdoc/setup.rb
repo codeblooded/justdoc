@@ -6,11 +6,26 @@ require 'yaml'
 module Justdoc
   class Setup
     
+    def self.ask_questions
+       STDOUT.print "Project Name: "
+       repo_name = STDIN.gets.chomp
+       STDOUT.print "Developer: "
+       repo_author = STDIN.gets.chomp
+       STDOUT.print "Track Changes with GIT [Y/n]? "
+       use_git = (STDIN.gets.chomp == "n") ? false : true       
+       STDOUT.print "Archive all Versions of Docs [Y/n]? "
+       archive_docs = (STDIN.gets.chomp == "n") ? false : true
+       if use_git
+         STDOUT.print "Add Docs to .gitignore [Y/n]? "
+         ignore_docs = (STDIN.gets.chomp == "n") ? false : true
+       end
+       @@base = {justdoc_version: Justdoc::VERSION, created_at: Time.now, project_name: repo_name, project_developer: repo_author, git_enabled: use_git, git_ignore: ignore_docs, archive_docs: archive_docs}
+    end
+    
     def self.create_directory_and_config
-      base = {version: Justdoc::VERSION, created_at: Time.now}
       Dir.mkdir(".docs")
       File.open(".docs/.justdoc.yml", "w+") do |f|
-        f.write(base.to_yaml)
+        f.write(@@base.to_yaml)
       end
     end
     
