@@ -4,7 +4,6 @@
 # justdoc.rb
 # ----------------------------------------------------------------------
 # The main file which links the ruby gem.
-
 require "justdoc/version"
 require "justdoc/tracker"
 require "justdoc/setup"
@@ -16,10 +15,14 @@ require "justdoc/generators/markdown"
 module Justdoc
   
   def self.run_setup
-    Setup.ask_questions
-    Setup.create_directory_and_config
-    Setup.add_to_gitignore
-    "=> Justdoc is configured and ready to document."
+    if !Setup.configured? || $options[:force]
+      Setup.ask_questions
+      Setup.create_directory_and_config
+      Setup.add_to_gitignore
+      "=> Justdoc is configured and ready to document."
+    else
+      "=> Justdoc is already configured for this project."
+    end
   end
   
   def self.run_with_git

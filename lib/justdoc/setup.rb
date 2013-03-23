@@ -7,20 +7,19 @@ module Justdoc
   class Setup
     
     def self.ask_questions
-      STDOUT.print "--------------------Justdoc Setup--------------------"
-      STDOUT.print "| Project Name: "
+      STDOUT.puts "> Please respond to the following questions to setup documentation."
+      STDOUT.print "  Project Name: "
       repo_name = STDIN.gets.chomp
-      STDOUT.print "| Developer: "
+      STDOUT.print "  Developer: "
       repo_author = STDIN.gets.chomp
-      STDOUT.print "| Track Changes with Git [Y/n]? "
+      STDOUT.print "  Track Changes with Git [Y/n]? "
       use_git = (STDIN.gets.chomp == "n") ? false : true       
       if use_git
-       STDOUT.print "| Add Docs to .gitignore [Y/n]? "
+       STDOUT.print "  Add Docs to .gitignore [Y/n]? "
        ignore_docs = (STDIN.gets.chomp == "n") ? false : true
-       STDOUT.print "| Archive Versions of Docs with Git Tags [Y/n]? "
+       STDOUT.print "  Archive Versions of Docs with Git Tags [Y/n]? "
        archive_docs = (STDIN.gets.chomp == "n") ? false : true
       end
-      STDOUT.print "-----------------------------------------------------"
       @@base = {justdoc_version: Justdoc::VERSION, created_at: Time.now, project_name: repo_name, project_developer: repo_author, git_enabled: use_git, git_ignore: ignore_docs, archive_docs: archive_docs}
     end
     
@@ -32,8 +31,10 @@ module Justdoc
     end
     
     def self.add_to_gitignore
-      File.open(".gitignore", "a") do |f|
-        f.puts "\.docs/*"
+      if @@base[:git_ignore]
+        File.open(".gitignore", "a") do |f|
+          f.puts "\.docs/*"
+        end
       end
     end
     
