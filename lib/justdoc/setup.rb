@@ -9,11 +9,9 @@ module Justdoc
     def self.create_directory_and_config
       base = {version: Justdoc::VERSION, created_at: Time.now}
       Dir.mkdir(".docs")
-      $vl.la action: "create", text: ".docs/"
       File.open(".docs/.justdoc.yml", "w+") do |f|
         f.write(base.to_yaml)
       end
-      $vl.la action: "create", text: ".docs/justdoc.yml"
     end
     
     def self.add_to_gitignore
@@ -23,11 +21,7 @@ module Justdoc
     end
     
     def self.configured?
-      if File.exists?(File.expand_path("/.docs/.justdoc.yml", Dir.pwd))
-        true
-      else
-        false
-      end
+      File.exists?("./.docs/.justdoc.yml") ? true : false
     end
     
   end

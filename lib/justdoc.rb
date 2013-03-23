@@ -8,10 +8,10 @@
 require "justdoc/version"
 require "justdoc/tracker"
 require "justdoc/setup"
-require "justdoc/generator"
 require "justdoc/reader"
 require "justdoc/recognizer"
-require "justdoc/outputs/markdown"
+require "justdoc/generator"
+require "justdoc/generators/markdown"
 
 module Justdoc
   
@@ -25,7 +25,7 @@ module Justdoc
       track = Tracker.new
       updoc = track.updated_files
       updoc.each do |file|
-        run_with_file(file)
+        run_with_file(file[:path])
       end
     else
       "Repo not configured, please run `justdoc setup`..."
@@ -33,10 +33,10 @@ module Justdoc
   end
   
   def self.run_with_file(data)
+    gen = Generator.new(Markdown.new)
     data = File.expand_path(data, Dir.pwd)
     reader = Justdoc::Reader.new(data)
-    reader.read_and_recognize
-    reader.document_to_generator
+    docs = reader.read_and_recognize
   end
   
 end

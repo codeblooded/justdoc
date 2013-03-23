@@ -43,9 +43,10 @@ if commands[command]
     p Justdoc.run_setup
   when "run"
     if !option.nil?
-      p Justdoc.run_with_file option
+      Justdoc.run_with_file option
+      puts "=> Done."
     else
-      p Justdoc.run_with_git 
+      puts Justdoc.run_with_git 
     end
   end
 else

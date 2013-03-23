@@ -1,6 +1,7 @@
 # Copyright (c) 2013 Benjamin Reed 
 # Licensed under the MIT License (see LICENSE.txt)
 require 'rugged'
+require 'setup'
 
 module Justdoc
   class Tracker
@@ -10,9 +11,11 @@ module Justdoc
       @repo = Rugged::Repository.discover(Dir.pwd)
     end
     
-    def staged_files
+    def updated_files
       ind = Rugged::Index.new()
+      ind
     end
+    
     
   end
 end

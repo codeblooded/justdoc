@@ -43,10 +43,5 @@ module Justdoc
       comment_syntax = @file.include?(".rb") ? :rstyle : :cstyle
     end
     
-    def document_to_generator
-      @markdown = Markdown.new
-      @markdown.end_of_file(@documents)
-    end
-    
   end
 end
