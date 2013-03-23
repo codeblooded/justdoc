@@ -31,7 +31,7 @@ module Justdoc
     
     def self.add_to_gitignore
       File.open(".gitignore", "a") do |f|
-        f.puts ".docs/*"
+        f.puts "\n.docs/*"
       end
     end
     
