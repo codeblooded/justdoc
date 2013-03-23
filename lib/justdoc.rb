@@ -38,7 +38,7 @@ module Justdoc
     docs = reader.read_and_recognize
     mrd = Markdown.new
     gen = Generator.new(mrd)
-    gen.generate_file name: "doc1.md", with: docs
+    gen.generate_file name: data, with: docs
   end
   
 end

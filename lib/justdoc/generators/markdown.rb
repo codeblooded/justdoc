@@ -17,6 +17,10 @@ module Justdoc
     end
     
     def respond_to_constructor(data)
+      if !@methods_stored
+        write_header(text: "Methods", level: 2)
+        @methods_stored = true
+      end
       write_section_with_subsections title: "(new) "+data[:name], level: 3, params: data[:params], returns: data[:returns]
     end
     
