@@ -22,21 +22,23 @@ module Justdoc
   
   def self.run_with_git
     if Setup.configured?
-      track = Tracker.new
-      updoc = track.updated_files
-      updoc.each do |file|
-        run_with_file(file[:path])
-      end
+          track = Tracker.new
+          updoc = track.updated_files
+          updoc.each do |file|
+            run_with_file(file[:path])
+          end
     else
       "Repo not configured, please run `justdoc setup`..."
     end
   end
   
   def self.run_with_file(data)
-    gen = Generator.new(Markdown.new)
     data = File.expand_path(data, Dir.pwd)
     reader = Justdoc::Reader.new(data)
     docs = reader.read_and_recognize
+    mrd = Markdown.new
+    gen = Generator.new(mrd)
+    gen.generate_file title: "doc1.md", with: docs
   end
   
 end
