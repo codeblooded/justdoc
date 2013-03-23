@@ -5,7 +5,7 @@
 # ----------------------------------------------------------------------
 # A file generator that relies on the output mechanism for different 
 # formats of documentation.
-module JustDoc
+module Justdoc
   class Generator
     
     def initialize(gen)
