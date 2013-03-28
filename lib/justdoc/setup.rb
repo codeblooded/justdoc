@@ -42,5 +42,9 @@ module Justdoc
       File.exists?("./.docs/.justdoc.yml") ? true : false
     end
     
+    def configuration
+      $cf = YAML.load_file('./.docs/.justdoc.yml')
+    end
+    
   end
 end
