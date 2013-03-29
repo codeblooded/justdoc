@@ -25,17 +25,29 @@ module Justdoc
     end
   end
   
+  def self.run_all_files_with_git
+    files = %x{ git ls-files }.chomp.split(/\n/)
+    files.map do |file|
+       run_with_file(file)
+    end
+    "=> Justdoc finished documenting repo."
+  end
+  
   def self.run_with_git
-    if Setup.configured?
-          track = Tracker.new
-          up = track.updated_files
-          up.map do |file|
-             run_with_file(file)
-          end
-          Setup.update_with_commit
-          "=> Justdoc done."
+    if $options[:redoc]
+      run_all_files_with_git
     else
-      "Repo not configured, please run `justdoc setup`..."
+      if Setup.configured?
+        track = Tracker.new
+        up = track.updated_files
+        up.map do |file|
+           run_with_file(file)
+        end
+        Setup.update_with_commit
+        "=> Justdoc done."
+      else
+        "Repo not configured, please run `justdoc setup`..."
+      end
     end
   end
   
