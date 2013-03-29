@@ -21,7 +21,7 @@ module Justdoc
          STDOUT.print "  Archive Versions of Docs with Git Tags [Y/n]? "
          archive_docs = (STDIN.gets.chomp == "n") ? false : true
          # get and store sha1
-         git = {sha1: %x{ git rev-parse HEAD }}
+         git = {sha1: %x{ git rev-parse HEAD }.chomp}
       end
       @@base = {justdoc_version: Justdoc::VERSION, created_at: Time.now, project_name: repo_name, project_developer: repo_author, git_enabled: use_git, git_ignore: ignore_docs, archive_docs: archive_docs}
       use_git ? @@base = @@base.merge(git) : @@base
