@@ -20,7 +20,7 @@ module Justdoc
     end
     
     def current_commit
-      %x{ git rev-parse HEAD }
+      %x{ git rev-parse HEAD }.chomp
     end
     
     def updated_files
