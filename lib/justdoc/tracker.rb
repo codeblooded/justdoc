@@ -26,7 +26,7 @@ module Justdoc
     def updated_files
       # get the files that have changed
       cmmd = "git diff --name-only #{@sha1} #{@sha2}"
-      raw_updated = %x{ cmmd }
+      raw_updated = %x{ #{cmmd} }
       # split on the \n delimiter
       files = raw_updated.split(/\n/)
     end

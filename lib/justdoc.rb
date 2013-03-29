@@ -32,6 +32,7 @@ module Justdoc
           updoc.each do |file|
             run_with_file(file)
           end
+          "=> Justdoc done."
     else
       "Repo not configured, please run `justdoc setup`..."
     end
