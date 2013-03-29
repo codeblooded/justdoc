@@ -61,8 +61,8 @@ module Justdoc
       $cf[:sha1]
     end
     
-    def self.update_with_commit(id)
-      $cf[:sha1] = id
+    def self.update_with_commit
+      $cf[:sha1] = %x{ git rev-parse HEAD }.chomp
       File.open(".docs/.justdoc.yml", "w+") do |f|
         f.write($cf.to_yaml)
       end

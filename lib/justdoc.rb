@@ -28,12 +28,11 @@ module Justdoc
   def self.run_with_git
     if Setup.configured?
           track = Tracker.new
-          updoc = track.updated_files
-          updoc.each do |file|
-            run_with_file(file)
+          up = track.updated_files
+          up.map do |file|
+             run_with_file(file)
           end
-          id = track.current_commit
-          Setup.update_with_commit(id)
+          Setup.update_with_commit
           "=> Justdoc done."
     else
       "Repo not configured, please run `justdoc setup`..."
@@ -44,9 +43,12 @@ module Justdoc
     data = File.expand_path(data, Dir.pwd)
     reader = Justdoc::Reader.new(data)
     docs = reader.read_and_recognize
-    mrd = Markdown.new
-    gen = Generator.new(mrd)
-    gen.generate_file name: docs[:classes][0][:name]+".md", with: docs
+    p docs
+    if !docs[:classes].empty?
+      mrd = Markdown.new
+      gen = Generator.new(mrd)
+      gen.generate_file name: docs[:classes][0][:name]+".md", with: docs
+    end
   end
   
 end
