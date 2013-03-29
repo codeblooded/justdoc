@@ -11,12 +11,8 @@ module Justdoc
     
     def initialize
       # get and store the current and last commits
-      @sha1 = current_commit
       @sha2 = Setup.last_commit?
-      if @sha1 != @sha2
-        @diff = false
-      end
-      @diff = true
+      @sha1 = current_commit
     end
     
     def current_commit

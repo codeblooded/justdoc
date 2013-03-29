@@ -60,5 +60,12 @@ module Justdoc
       # return sha-1
       $cf[:sha1]
     end
+    
+    def self.update_with_commit(id)
+      $cf[:sha1] = id
+      File.open(".docs/.justdoc.yml", "w+") do |f|
+        f.write($cf.to_yaml)
+      end
+    end
   end
 end

@@ -32,6 +32,8 @@ module Justdoc
           updoc.each do |file|
             run_with_file(file)
           end
+          id = track.current_commit
+          Setup.update_with_commit(id)
           "=> Justdoc done."
     else
       "Repo not configured, please run `justdoc setup`..."
