@@ -30,7 +30,7 @@ module Justdoc
           track = Tracker.new
           updoc = track.updated_files
           updoc.each do |file|
-            run_with_file(file[:path])
+            run_with_file(file)
           end
     else
       "Repo not configured, please run `justdoc setup`..."
