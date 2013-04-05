@@ -14,7 +14,7 @@ However, right now it must be installed by cloning the Github repo, navigating t
 
     $ rake install
 
-__NOTE: It is required that GIT be installed on your system and used in the project to be documented.__
+Although having Git installed is no longer a requirement, it is still __highly recommended__. 
 
 ## Usage
 
