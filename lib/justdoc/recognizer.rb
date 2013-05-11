@@ -8,7 +8,7 @@
 require 'debugger'
 
 module Justdoc
-  #! class: Recogniz:er:
+  #! class: Recognizer:
   #  abstract: Recognizes Documentation in Comments
   #  description:
   #    The abstraction of recognizing documentation in files.
@@ -84,15 +84,15 @@ module Justdoc
       #    Finds the type of document and directs to appropriate method.
       #!!
       def find_type_and_document(match)
-        if match.include? "module"
+        if match.include? "module:"
           scan_module(match)
-        elsif match.include? "class"
+        elsif match.include? "class:"
           scan_class(match)
-        elsif match.include? "constructs"
+        elsif match.include? "constructs:"
           scan_constructor(match)
-        elsif match.include? "method"
+        elsif match.include? "method:"
           scan_method(match)
-        elsif match.include? "var"
+        elsif match.include? "var:"
           scan_property(match)
         end
       end
@@ -267,7 +267,7 @@ module Justdoc
       #    Unless specified, it assumes multiline to false.
       #  returns: The second element in the match split on the delimiter, or nil.
       #!!
-      def match_and_normalize(text: nil, pattern: //, delimiter: /\s*:\s*/,
+      def match_and_normalize(text: nil, pattern: //, delimiter: /\s*:\s+/,
          multiline: false)
         ret = nil
         res = pattern.match(text)
