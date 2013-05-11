@@ -98,10 +98,7 @@ To document code, simply use comments with an added ! (exclamation point).  If y
 </table>
 
 ## Caveats
-Justdoc is still being _actively developed_.  It currently has a problem with any documentation containing a colon, because
-the colon serves as the main delimiter.  In a stable release, we will silence scanning of 'quotes' containing colons.  Developers
-will be able to use colons in practically every section by wrapping it in a quote.  As of now, this is the biggest bug.  Please
-report an issue if you find another.
+Justdoc is still being _actively developed_. Please report any issues.
 
 ## Contributing
 
