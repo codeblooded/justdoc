@@ -8,7 +8,7 @@
 require 'debugger'
 
 module Justdoc
-  #! class: Recognizer
+  #! class: Recogniz:er:
   #  abstract: Recognizes Documentation in Comments
   #  description:
   #    The abstraction of recognizing documentation in files.
@@ -84,15 +84,15 @@ module Justdoc
       #    Finds the type of document and directs to appropriate method.
       #!!
       def find_type_and_document(match)
-        if match.include? "module:"
+        if match.include? "module"
           scan_module(match)
-        elsif match.include? "class:"
+        elsif match.include? "class"
           scan_class(match)
-        elsif match.include? "constructs:"
+        elsif match.include? "constructs"
           scan_constructor(match)
-        elsif match.include? "method:"
+        elsif match.include? "method"
           scan_method(match)
-        elsif match.include? "var:"
+        elsif match.include? "var"
           scan_property(match)
         end
       end
@@ -125,7 +125,7 @@ module Justdoc
           abstract: get_abstract(str), description: get_description(str)}
       end
       
-      #! constructor: scan_constructor
+      #! constructs: scan_constructor
       #  abstract: Scans a constructor for documentation
       #  params:
       #    str = The unsanitized match containing the constructor documentation.
@@ -195,7 +195,7 @@ module Justdoc
       #!!
       def get_description(str)
         if (str.include? "description:")
-          match_and_normalize text: str, pattern: /description:\n((#|\*)*\s+(.*)\n)*/, multiline: true
+          match_and_normalize text: str, pattern: /description:\n((#|\*)*\s+((.|:)*)\n)*/, multiline: true
         end
       end
       
@@ -276,16 +276,22 @@ module Justdoc
           results = res.to_a
           results[0].gsub(pattern, "")
           title = results[0].split(delimiter)
-          ret = title[1].strip
-          # if multiline, remove comment marks
-          if multiline == true
-            ret = ret.gsub(/(#!*|\/\**)*/, "")
-            ret = ret.gsub(/\s{2,}/, " ")
-            ret = ret.strip
+          if known_vocabulary.match(title[0]) != nil
+            ret = title[1].strip
+            # if multiline, remove comment marks
+            if multiline == true
+              ret = ret.gsub(/(#!*|\/\**)*/, "")
+              ret = ret.gsub(/\s{2,}/, " ")
+              ret = ret.strip
+            end
           end
+          # return ret
+          ret
         end
-        # return ret
-        ret
+      end
+      
+      def known_vocabulary
+        /(module|class|constructs|method|var|abstract|params|description|type|returns)/
       end
     
   end
