@@ -1,6 +1,5 @@
 # Copyright (c) 2013 Benjamin Reed 
 # Licensed under the MIT License (see LICENSE.txt)
-require 'rugged'
 require 'yaml'
 
 module Justdoc
