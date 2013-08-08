@@ -1,0 +1,14 @@
+language: ruby
+script: "bundle exec rake test"
+rvm:
+  - 2.0.0
+gemfile:
+  - Gemfile
+services:
+notifications:
+  email:
+    recipients:
+      - benvreed@gmail.com
+    on_success: change
+    on_failure: always
+    
