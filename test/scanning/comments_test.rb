@@ -120,7 +120,7 @@ describe Justdoc::Recognizer do
     rec = Justdoc::Recognizer.new()
     rec.recognize(comment, :rstyle)
     matches = rec.scan_matches
-    matches[:classes][0][:description].must_equal "long description"
+    matches[:classes][0][:description].must_equal "long-description"
   end
   
 end
