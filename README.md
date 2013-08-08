@@ -1,6 +1,7 @@
 # Justdoc
 
 _NOTE: THIS PROJECT IS IN DEVELOPMENT._
+[![Build Status](https://travis-ci.org/codeblooded/justdoc.png?branch=master)](https://travis-ci.org/codeblooded/justdoc)
 
 A simple documentation generator that does the hard work, keeps comments readable, and does not require large configuration files. 
 
