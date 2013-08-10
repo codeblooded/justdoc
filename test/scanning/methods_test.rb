@@ -52,6 +52,16 @@ describe Justdoc::Recognizer do
     documents[:methods][0][:name].must_equal "go_to_the_moon"
   end
   
+  it 'should recognize the full name of a method with a trailing colon' do
+    input = "/*! method: viewWillLoad:WithImage:
+                 abstract: loads with image
+    */"
+    rec = Justdoc::Recognizer.new
+    rec.recognize(input, :cstyle)
+    documents = rec.scan_matches
+    documents[:methods][0][:name].must_equal "viewWillLoad:WithImage:"
+  end
+  
   it 'should recognize a parameter in a method - rstyle' do
     input = "#! method: go_to_the_moon(astronaut)
     # abstract: sends to the moon 

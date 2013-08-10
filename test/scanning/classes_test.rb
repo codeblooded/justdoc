@@ -51,4 +51,34 @@ describe Justdoc::Recognizer do
     results[0][:description].must_equal "The human class inherits methods from the Animal class. It allows methods to be called on a human object."
   end
   
+  it 'should recognize the full name of a class with a nested colon' do
+    input = "#! class: Hu:man
+      #!
+      #! abstract: Defines Characteristics and Methods of a Human.
+      #!
+      #! description:
+      #!    The human class inherits methods from the Animal class.
+      #!    It allows methods to be called on a human object.
+      #!!"
+    rec = Justdoc::Recognizer.new
+    rec.recognize(input, :rstyle)
+    documents = rec.scan_matches
+    documents[:classes][0][:name].must_equal "Hu:man"
+  end
+  
+  it 'should recognize the full name of a class with a trailing colon' do
+    input = "#! class: Human:
+      #!
+      #! abstract: Defines Characteristics and Methods of a Human.
+      #!
+      #! description:
+      #!    The human class inherits methods from the Animal class.
+      #!    It allows methods to be called on a human object.
+      #!!"
+    rec = Justdoc::Recognizer.new
+    rec.recognize(input, :rstyle)
+    documents = rec.scan_matches
+    documents[:classes][0][:name].must_equal "Human:"
+  end
+  
 end

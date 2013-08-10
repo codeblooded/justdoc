@@ -120,7 +120,7 @@ module Justdoc
       #    to the documents.
       #!!
       def scan_class(str)
-        class_name = match_and_normalize text: str, pattern: /class:\s*(.*)\n/
+        class_name = match_and_normalize text: str, pattern: /class:\s*(.|\:)*\n/
         @documents[:classes] << {name: class_name, 
           abstract: get_abstract(str), description: get_description(str)}
       end
@@ -181,7 +181,7 @@ module Justdoc
       #!!
       def get_abstract(str)
         if (str.include? "abstract:")
-          match_and_normalize text: str, pattern: /abstract:(\s+(.*)\n)/
+          match_and_normalize text: str, pattern: /abstract:(\s+(.*)\n)/, multiline: true
         end
       end
       
@@ -195,7 +195,8 @@ module Justdoc
       #!!
       def get_description(str)
         if (str.include? "description:")
-          match_and_normalize text: str, pattern: /description:\n((#|\*)*\s+((.|:)*)\n)*/, multiline: true
+          match_and_normalize text: str, pattern: /description:\n((#|\*)*\s+((.|:)*)\n)*/,
+           multiline: true, delimiter: /\s*:\s+/
         end
       end
       
@@ -267,7 +268,7 @@ module Justdoc
       #    Unless specified, it assumes multiline to false.
       #  returns: The second element in the match split on the delimiter, or nil.
       #!!
-      def match_and_normalize(text: nil, pattern: //, delimiter: /\s*:\s+/,
+      def match_and_normalize(text: nil, pattern: //, delimiter: /\s*: \s*/,
          multiline: false)
         ret = nil
         res = pattern.match(text)
@@ -277,6 +278,9 @@ module Justdoc
           results[0].gsub(pattern, "")
           title = results[0].split(delimiter)
           if known_vocabulary.match(title[0]) != nil
+            if title[1] == nil
+              p title
+            end
             ret = title[1].strip
             # if multiline, remove comment marks
             if multiline == true

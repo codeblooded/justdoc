@@ -123,4 +123,16 @@ describe Justdoc::Recognizer do
     matches[:classes][0][:description].must_equal "long description"
   end
   
+  it 'should match the full description with a nested colon' do
+    comment = "#! class: Here 
+    # abstract: abstracted
+    # description:
+        long des:cription
+    #!!"
+    rec = Justdoc::Recognizer.new()
+    rec.recognize(comment, :rstyle)
+    matches = rec.scan_matches
+    matches[:classes][0][:description].must_equal "long des:cription"
+  end
+  
 end
