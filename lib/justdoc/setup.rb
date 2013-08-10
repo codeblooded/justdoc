@@ -45,12 +45,20 @@ module Justdoc
     
     def self.configured?
       # check if the configuration file exists
-      File.exists?("./.docs/.justdoc.yml") ? true : false
+      # use a loop to search 10 parent directories
+      configFile = "./.docs/.justdoc.yml"
+      for i in 1..10
+        configFile = "../" + configFile
+        found = File.exists?(configFile) ? true : false
+        break if found
+      end
+      @foundConfigFile = configFile
+      found
     end
     
     def self.configuration
       # load the configuration file
-      $cf = YAML.load_file('./.docs/.justdoc.yml')
+      $cf = YAML.load_file(@foundConfigFile)
     end
     
     def self.last_commit?
@@ -61,8 +69,9 @@ module Justdoc
     end
     
     def self.update_with_commit
+      configuration if $cf.nil?
       $cf[:sha1] = %x{ git rev-parse HEAD }.chomp
-      File.open(".docs/.justdoc.yml", "w+") do |f|
+      File.open(config, "w+") do |f|
         f.write($cf.to_yaml)
       end
     end
